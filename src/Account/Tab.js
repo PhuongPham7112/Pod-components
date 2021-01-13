@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -9,6 +9,21 @@ import Box from '@material-ui/core/Box';
 import LogIn from './LogIn.js';
 import Register from './Register.js';
 import SwipeableViews from 'react-swipeable-views';
+
+const StyledTabs = withStyles({
+  root: {
+    textTransform: 'none'
+  },
+  flexContainer: {
+    backgroundColor: '#f2f2f2',
+  },
+})(Tabs);
+
+const StyledTab = withStyles({
+  root: {
+    textTransform: 'none'
+  },
+})(Tab)
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,17 +58,7 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  tab: {
-      width: '50%'
-  }
-}));
-
 export default function SimpleTabs() {
-  const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const handleChangeIndex = (index) => {
@@ -65,12 +70,13 @@ export default function SimpleTabs() {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs centered value={value} onChange={handleChange} scrollButtons="auto" aria-label="simple tabs example">
-            <Tab className={classes.tab} label="Log In" {...a11yProps(0)} />
-            <Tab className={classes.tab} label="Register" {...a11yProps(1)}/>
-        </Tabs>
+    // <ThemeProvider theme={mainTheme}>
+    <div>
+      <AppBar position="static" elevation={0}>
+        <StyledTabs variant="fullWidth" indicatorColor="primary" textColor="primary" value={value} onChange={handleChange} scrollButtons="auto" aria-label="simple tabs example">
+            <StyledTab label="Log In" {...a11yProps(0)} />
+            <StyledTab label="Register" {...a11yProps(1)}/>
+        </StyledTabs>
       </AppBar>
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -84,7 +90,6 @@ export default function SimpleTabs() {
           <Register/>
         </TabPanel>
       </SwipeableViews>
-      
     </div>
   );
 }

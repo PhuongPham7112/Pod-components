@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import 'fontsource-rubik';
 
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import { Typography, Button, IconButton } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
@@ -16,39 +16,6 @@ import audios from '../audios.js';
 import MoreOptions from './MoreOptions.js';
 import Expand from './Expand.js';
 import TimeSlider from "react-input-slider";
-
-let theme = createMuiTheme({
-    overrides: {
-      // Style sheet name ⚛️
-        MuiButton: {
-        // Name of the rule
-            text: {
-          // Some CSS
-                color: 'black',
-        },
-      },
-    },
-  });
-
-theme.typography.body1 = {
-    fontSize: '0.8rem',
-    '@media (max-width:700px)': {
-      fontSize: '0.7rem',
-    },
-    [theme.breakpoints.up('md')]: {
-      fontSize: '1rem',
-    },
-  };
-
-theme.typography.body2 = {
-    fontSize: '0.7rem',
-    '@media (max-width:700px)': {
-      fontSize: '0.6rem',
-    },
-    [theme.breakpoints.up('md')]: {
-      fontSize: '0.8rem',
-    },
-  };
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -88,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
+        borderRight: 'solid thin gray'
     },
     // the slider for big screen
     sliderBigScreen: {
@@ -120,7 +88,8 @@ const useStyles = makeStyles((theme) => ({
         gridColumn: '2/3',
         gridRow: '2/3',
         justifySelf: 'start',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        paddingLeft: '12px'
     },
     // pod title and pod author
     title: {
@@ -148,7 +117,6 @@ const useStyles = makeStyles((theme) => ({
         color: 'black',
     },
     share: {
-        // display: 'none',
         color: 'black',
     },
     follow: {
@@ -260,7 +228,6 @@ const useStyles = makeStyles((theme) => ({
             padding: 0,
             fontSize: '5px',
             color: '#ff8383',
-
         },
         podInfoSmall: {
             margin: '5px 0px 5px'
@@ -341,7 +308,6 @@ export default function PodPost() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
         <div className={classes.container}> 
             {/* small screen layout that will only appear when screen size is below 550px */}
             <div className={classes.contentSmallScreen}>
@@ -369,7 +335,7 @@ export default function PodPost() {
                     </div>
                     <div className={classes.podInfoSmall}>
                         <Typography variant="body1"> {audios[audioIndex].title} Title ● Playlist </Typography>
-                        <Typography variant="body2"> {audios[audioIndex].author}'s response </Typography>
+                        <Typography variant="body4"> {audios[audioIndex].author}'s response </Typography>
                     </div>
                     <IconButton className={classes.skipButtonSmallScreen}>
                         <SkipNextIcon onClick={() => {
@@ -414,7 +380,14 @@ export default function PodPost() {
                     </IconButton>
 
                     <div onClick={handlePausePlayClick}>
-                        {isPlay ? <PauseCircleFilledIcon className={classes.playPauseButton}/> : <PlayCircleFilledIcon className={classes.playPauseButton}/>}
+                        {isPlay ?
+                        <IconButton>
+                        <PauseCircleFilledIcon className={classes.playPauseButton}/>
+                        </IconButton> 
+                         : 
+                        <IconButton>
+                        <PlayCircleFilledIcon className={classes.playPauseButton}/>
+                        </IconButton>} 
                     </div>
 
                     <IconButton>
@@ -463,7 +436,7 @@ export default function PodPost() {
                 {/* right side of the bar */}
                 <div className={classes.podInfo}>
                     <Typography variant="body1" className={classes.title}> {audios[audioIndex].title} Title ● Playlist </Typography>
-                    <Typography variant="body2" className={classes.userResponse}> {audios[audioIndex].author}'s response </Typography>
+                    <Typography variant="body4" className={classes.userResponse}> {audios[audioIndex].author}'s response </Typography>
                 </div>
                 
                 <div className={classes.otherButtons}> 
@@ -478,18 +451,11 @@ export default function PodPost() {
                     <IconButton className={classes.share} >
                         <ShareIcon />
                     </IconButton>
-
-                    <Button variant="contained" className={classes.follow} size="small"> 
-                        <Typography variant="body3" style={{margin: '4px 12px 4px'}}>
-                            Follow Playlist
-                        </Typography>
-                    </Button>
                     
                     <MoreOptions optionsList={myOptions} className={classes.more}/>
 
                 </div>
             </div>
         </div>
-        </ThemeProvider>
     )
 }

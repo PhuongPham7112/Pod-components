@@ -5,37 +5,61 @@ import Box from '@material-ui/core/Box';
 import { GoogleLogin } from 'react-google-login';
 import Avatar from "@material-ui/core/Avatar";
 import DatePicker from 'react-date-picker';
+import { withStyles } from '@material-ui/core/styles';
 import './DatePickerCustom.css';
 import GoogleLogo from '../static/32px-Google_Logo.svg';
+import Popover from '@material-ui/core/Popover';
+
 
 const responseGoogle = (response) => {
   console.log(response);
 };
 
-const validateEmailandPassword = ()  => {
-    var password = document.getElementById("password").value;
-    var regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/
+const StyledButton = withStyles({
+    root: {
+      textTransform: 'none',
+      color: 'white'
+    },
+})(Button);
 
-    var mail = document.getElementById("email").value;
-    var regexMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (regexMail.test(mail) && regexPassword.test(password)) {
-        alert("valid email and password");
-        return true
-    } else if (!regexMail.test(mail) && regexPassword.test(password)) {
-        alert("invalid email");
-        return false
-    } else if (regexMail.test(mail) && !regexPassword.test(password)) {
-        alert("invalid password");
-        return false
-    } else if (!regexMail.test(mail) || !regexPassword.test(password)) {
-        alert("invalid email and password");
-        return false
-    }
-};
-
-export default function LogIn() {
+export default function Register() {
+    // for the calendar tracking
     const [value, onChange] = useState(new Date());
+    // use state for the position of the popover
+    const [isError, setError] = React.useState(null);
+    // use state for the position of the popover
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    // a function that tests email
+    const validateEmailandPassword = ()  => {
+        var password = document.getElementById("password").value;
+        var regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/
+    
+        var mail = document.getElementById("email").value;
+        var regexMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    
+        if (regexMail.test(mail) && regexPassword.test(password)) {
+            setError(false);
+            return true
+        } else {
+            setError(true);
+            return false
+        }
+    };
+
+    // determine whether there will be a popover error message appear
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+        setError(false)
+    };
+    // a callback function that combines both validation and popover functions
+    const buttonOnClick = (event) => {
+        validateEmailandPassword();
+        handleClick(event);
+    };
 
     return(
         <Box flexDirection="column" justifyContent="center" style={{padding:'5px'}}>
@@ -52,15 +76,32 @@ export default function LogIn() {
                 monthPlaceholder="month"
                 yearPlaceholder="year"
             />    
-            <Button variant="contained" color="primary" onClick={validateEmailandPassword} style={{width: '70%', margin: '10px'}}>
+            <StyledButton variant="contained" color="primary" onClick={buttonOnClick} style={{width: '70%', margin: '10px'}}>
                 Continue
-            </Button>
+            </StyledButton>
+            <Popover 
+                id='error-message'
+                elevation={0}
+                open={isError}
+                onClose={handleClose}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'center',
+                    horizontal: 'left',
+                }}
+                >
+                Invalid email or password
+            </Popover>
             <GoogleLogin
                 clientId="62863344706-mnoijl0kao0bif165up4hhodd5br2ekh.apps.googleusercontent.com"
                 render={renderProps => (
-                <Button variant="contained" color="primary" style={{width: '70%', margin: '10px'}} startIcon={<Avatar src={GoogleLogo}/>} onClick={renderProps.onClick} disabled={renderProps.disabled}> 
+                <StyledButton variant="contained" color="primary" style={{width: '70%', margin: '10px'}} startIcon={<Avatar src={GoogleLogo}/>} onClick={renderProps.onClick} disabled={renderProps.disabled}> 
                     Continue with Google
-                </Button>
+                </StyledButton>
                 )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
