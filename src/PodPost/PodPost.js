@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import 'fontsource-rubik';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Typography, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
@@ -54,22 +54,22 @@ const useStyles = makeStyles((theme) => ({
         gridColumn: '1/2',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         borderRight: 'solid thin gray'
     },
     // the slider for big screen
     sliderBigScreen: {
         display: 'flex',
         width: '90%',
-        alignItem: 'center'
+        alignItem: 'center',
     },
     // the left side buttons
     playPauseButton: {
-        color: '#ff8383',
+        color: theme.palette.primary.main,
         fontSize: '35px',
     },
     skipButton: {
-        color: '#ff8383',
+        color: theme.palette.primary.main,
         fontSize: '35px',
     },
     volumne: {
@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
     },
     // mic, bookmark, share, follow, and more buttons
     mic: {
-        color: 'black'
+        color: 'black',
     },
     bookmark: {
         color: 'black',
@@ -119,11 +119,7 @@ const useStyles = makeStyles((theme) => ({
     share: {
         color: 'black',
     },
-    follow: {
-        backgroundColor: '#ff8383',
-        padding: 0,        
-    },
-    
+
     // slider for the medium screen
     sliderMediumScreen: {
         display: 'none'
@@ -237,6 +233,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PodPost() {
     const classes = useStyles();
+    const theme = useTheme();
     const audioRef = useRef(null);
     // audioIndex is used to track the order of the songs in the laylist
     const [audioIndex, setAudioIndex] = useState(0);
@@ -319,14 +316,17 @@ export default function PodPost() {
                         onChange={handleTimeSliderChange}
                         styles={{
                             track: {
-                                backgroundColor: "#e3e3e3",
+                                backgroundColor: "white",
                                 width: "100%",
                                 height: "3px",
                                 
                             },
                             active: {
-                                backgroundColor: "#ff8383"
+                                backgroundColor: theme.palette.primary.main,
                             },
+                            thumb: {
+                                backgroundColor: theme.palette.primary.main,
+                            }
                         }}/>
                 </div>
                 <div className={classes.containerSmallScreen}>
@@ -356,14 +356,17 @@ export default function PodPost() {
                             onChange={handleTimeSliderChange}
                         styles={{
                             track: {
-                                backgroundColor: "#e3e3e3",
+                                backgroundColor: "white",
                                 width: "100%",
                                 height: "3px",
                                 
                             },
                             active: {
-                                backgroundColor: "#ff8383"
+                                backgroundColor: theme.palette.primary.main,
                             },
+                            thumb: {
+                                backgroundColor: theme.palette.primary.main,
+                            }
                         }}/>
             </div>
 
@@ -406,14 +409,17 @@ export default function PodPost() {
                             onChange={handleTimeSliderChange}
                             styles={{
                                 track: {
-                                    backgroundColor: "#e3e3e3",
+                                    backgroundColor: "white",
                                     width: "100%",
                                     height: "3px",
                                     
                                 },
                                 active: {
-                                    backgroundColor: "#ff8383"
+                                    backgroundColor: theme.palette.primary.main,
                                 },
+                                thumb: {
+                                    backgroundColor: theme.palette.primary.main,
+                                }
                             }}
                         />
                     </div>
