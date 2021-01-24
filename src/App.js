@@ -1,5 +1,5 @@
 import './App.css';
-import PodPost from './podPost/PodPost.js';
+import PodPost from './podPlayer/PodPlayer.js';
 import Account from './account/Account.js';
 import Notification from './pages/Notification.js';
 import Library from './pages/Library.js';
