@@ -21,7 +21,7 @@ let mainTheme = createMuiTheme({
   overrides: {
     MuiTypography: {
       body1: {
-        fontSize: 'calc(12px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));'
+        fontSize: 'calc(11px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));'
       },
       body4: {
         fontSize: 'calc(9px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));'

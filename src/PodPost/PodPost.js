@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    
-    padding: theme.spacing(1),
 
     // big screen layout
     // the big, pink background rectangle that sticks to the bottom of the screen
@@ -34,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
         width: '100vw',
         display: 'inline-block',
         backgroundColor: '#fff1f0',
-        margin: '0 auto',
+        marginRight: 0,
+        marginLeft: 0,
         margintop: '5vh',
     },
     // the content container inside the rectangle
@@ -219,6 +218,8 @@ const useStyles = makeStyles((theme) => ({
             gridRow: '2/3',
             justifyContent: 'space-between',
             alignItems: 'center',
+            marginLeft: 0,
+            marginRight: 0
         },
         playButtonSmallScreen: {
             margin: '3px 10px 0px',

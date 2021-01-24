@@ -4,7 +4,7 @@ import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-
+import { Typography } from "@material-ui/core";
 
 export default function Expand() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,17 +85,17 @@ export default function Expand() {
         onClose={handleClose}>
 
         <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 8}}>
-          <p style={{margin: 3}}>
+          <Typography variant="subtitle1" style={{margin: 3}}>
             Pod
-          </p>
+          </Typography>
           <div style={{display: "flex", justifyContent: "center", borderRadius: 46, border: "solid thin gray", width: 92, margin: 3}}>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickUpVotePod} style={{padding: "2px"}}>
               <ArrowUpwardIcon style={{fontSize: "small"}}/>
             </IconButton>
 
-            <p style={{margin: "0px 5px"}}> 
+            <Typography variant="subtitle1" style={{margin: "0px 5px"}}> 
               {votesPod} 
-            </p>
+            </Typography>
 
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickDownVotePod} style={{padding: "2px"}}>
               <ArrowDownwardIcon style={{fontSize: "small"}}/>
@@ -104,16 +104,16 @@ export default function Expand() {
         </div>
 
         <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 8}}>
-          <p style={{margin: 3}}>
+          <Typography variant="subtitle1" style={{margin: 3}}>
             Playlist
-          </p>
+          </Typography>
           <div style={{display: "flex", justifyContent: "center", borderRadius: 46, border: "solid thin gray", width: 92, margin: 3}}>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickUpVotePlaylist} style={{padding: "2px"}}>
               <ArrowUpwardIcon style={{fontSize: "small"}}/>
             </IconButton>
-            <p style={{margin: "0px 5px"}}> 
+            <Typography variant="subtitle1" style={{margin: "0px 5px"}}> 
               {votesPlaylist} 
-            </p>
+            </Typography>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickDownVotePlaylist} style={{padding: "2px"}}>
               <ArrowDownwardIcon style={{fontSize: "small"}}/>
             </IconButton>
