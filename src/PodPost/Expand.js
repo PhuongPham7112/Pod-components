@@ -84,16 +84,16 @@ export default function Expand() {
         open={Boolean(anchorEl)}
         onClose={handleClose}>
 
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-          <p style={{margin: 0}}>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 8}}>
+          <p style={{margin: 3}}>
             Pod
           </p>
-          <div style={{display: "flex", borderStyle: "solid", borderColor: "gray"}}>
+          <div style={{display: "flex", justifyContent: "center", borderRadius: 46, border: "solid thin gray", width: 92, margin: 3}}>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickUpVotePod} style={{padding: "2px"}}>
               <ArrowUpwardIcon style={{fontSize: "small"}}/>
             </IconButton>
 
-            <p style={{margin: "2px"}}> 
+            <p style={{margin: "0px 5px"}}> 
               {votesPod} 
             </p>
 
@@ -103,15 +103,15 @@ export default function Expand() {
           </div>
         </div>
 
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-          <p style={{margin: 0}}>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 8}}>
+          <p style={{margin: 3}}>
             Playlist
           </p>
-          <div style={{display: "flex", borderStyle: "solid", borderColor: "gray"}}>
+          <div style={{display: "flex", justifyContent: "center", borderRadius: 46, border: "solid thin gray", width: 92, margin: 3}}>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickUpVotePlaylist} style={{padding: "2px"}}>
               <ArrowUpwardIcon style={{fontSize: "small"}}/>
             </IconButton>
-            <p style={{margin: "2px"}}> 
+            <p style={{margin: "0px 5px"}}> 
               {votesPlaylist} 
             </p>
             <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClickDownVotePlaylist} style={{padding: "2px"}}>

@@ -11,6 +11,8 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "avataaars": "^1.2.1",
+    "date-fns": "^2.16.1",
     "fontsource-rubik": "^4.0.0",
     "react": "^17.0.1",
     "react-date-picker": "^8.0.6",

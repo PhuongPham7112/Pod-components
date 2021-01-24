@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import 'fontsource-rubik';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Typography, IconButton } from "@material-ui/core";
+import { Typography, IconButton, Tooltip } from "@material-ui/core";
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
@@ -55,22 +55,26 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRight: 'solid thin gray'
+        borderRight: 'solid thin gray',
+        height: '100%'
     },
     // the slider for big screen
     sliderBigScreen: {
         display: 'flex',
         width: '90%',
         alignItem: 'center',
+        justifyContent: 'center'
     },
     // the left side buttons
     playPauseButton: {
         color: theme.palette.primary.main,
         fontSize: '35px',
+        margin: 3
     },
     skipButton: {
         color: theme.palette.primary.main,
         fontSize: '35px',
+        margin: 3
     },
     volumne: {
         color: 'black'
@@ -89,7 +93,10 @@ const useStyles = makeStyles((theme) => ({
         gridRow: '2/3',
         justifySelf: 'start',
         alignSelf: 'center',
-        paddingLeft: '12px'
+        paddingLeft: '20px',
+        whiteSpace: 'nowrap',
+        wordBreak: 'normal',
+        margin: 5
     },
     // pod title and pod author
     title: {
@@ -112,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
     // mic, bookmark, share, follow, and more buttons
     mic: {
         color: 'black',
+        
     },
     bookmark: {
         color: 'black',
@@ -147,6 +155,17 @@ const useStyles = makeStyles((theme) => ({
         skipButton: {
             fontSize: '30px'
         },
+        sliderBigScreen: {
+            display: 'none'
+        },
+        // show the medium slider
+        sliderMediumScreen: {
+            display: 'flex',
+            width: '100%',
+            marginTop: 0,
+            marginBottom: 0,
+            alignItem: 'start'
+        }
     },
     [theme.breakpoints.down('760')]: {
         bookmark: {
@@ -158,23 +177,12 @@ const useStyles = makeStyles((theme) => ({
         follow: {
             display: 'none'
         },
-        sliderBigScreen: {
-            display: 'none'
-        },
         playPauseButton: {
             fontSize: '25px'
         },
         skipButton: {
             fontSize: '25px'
         },
-        // show the medium slider
-        sliderMediumScreen: {
-            display: 'flex',
-            width: '100%',
-            marginTop: 0,
-            marginBottom: 0,
-            alignItem: 'start'
-        }
     },
     [theme.breakpoints.down('600')]: {
         // hide big screen content
@@ -283,18 +291,18 @@ export default function PodPost() {
         // if screen size is below 760px, here are the options that will appear in more button
         if (mediaQueries[0].matches){
             myOptions.length = 0
-            myOptions.push("option1", "option2", "mic", "bookmark", "share", "follow playlist")
+            myOptions.push("mic", "bookmark", "share", "follow playlist", "report")
         }
         // if screen size is between 960 and 761px, here are the options that will appear in more button
         else if (mediaQueries[1].matches){ 
             myOptions.length = 0
-            myOptions.push("option1", "option2", "share")
+            myOptions.push("share", "follow playlist", "report")
             
         }
         // if screen size is above 961px, here are the options that will appear in more button
         else if (mediaQueries[2].matches){ 
             myOptions.length = 0
-            myOptions.push("option1", "option2")
+            myOptions.push("follow playlist", "report")
         }
     }
     
@@ -334,7 +342,7 @@ export default function PodPost() {
                             {isPlay ? <PauseCircleFilledIcon className={classes.playPauseButton}/> : <PlayCircleFilledIcon className={classes.playPauseButton}/>}
                     </div>
                     <div className={classes.podInfoSmall}>
-                        <Typography variant="body1"> {audios[audioIndex].title} Title ● Playlist </Typography>
+                        <Typography variant="body1"> {audios[audioIndex].title + " - " + audios[audioIndex].playlist} </Typography>
                         <Typography variant="body4"> {audios[audioIndex].author}'s response </Typography>
                     </div>
                     <IconButton className={classes.skipButtonSmallScreen}>
@@ -374,32 +382,36 @@ export default function PodPost() {
             <div className={classes.contentBigScreen}>
                 {/* left side of the bar */}
                 <div className={classes.player}>
-                    <IconButton >
+                    <IconButton size="small">
                         <SkipPreviousIcon className={classes.skipButton} onClick={() => {
                         setCurrentTime(0);
-                        if (audioIndex > 1) {
+                        if (audioIndex >= 1) {
                             setAudioIndex(audioIndex - 1)
                         }}}/>
                     </IconButton>
 
                     <div onClick={handlePausePlayClick}>
                         {isPlay ?
-                        <IconButton>
+                        <IconButton size="small">
                         <PauseCircleFilledIcon className={classes.playPauseButton}/>
                         </IconButton> 
                          : 
-                        <IconButton>
+                        <IconButton size="small">
                         <PlayCircleFilledIcon className={classes.playPauseButton}/>
                         </IconButton>} 
                     </div>
 
-                    <IconButton>
+                    <IconButton size="small">
                         <SkipNextIcon className={classes.skipButton} onClick={() => {
                             setCurrentTime(0);
                             if (audioIndex < Object.keys(audios).length - 1) {
                                 setAudioIndex(audioIndex + 1)
                             }}}/>
                     </IconButton>
+
+                    <Typography variant="subtitle2" color="primary" style={{margin: 10}}>
+                        {Math.floor(currentTime / 60)}:{Math.floor(currentTime - Math.floor(currentTime / 60)*60)}/{Math.floor(duration / 60)}:{Math.floor(duration - Math.floor(duration / 60)*60)}
+                    </Typography>
                     
                     <div className={classes.sliderBigScreen}>
                         <TimeSlider
@@ -410,7 +422,7 @@ export default function PodPost() {
                             styles={{
                                 track: {
                                     backgroundColor: "white",
-                                    width: "100%",
+                                    width: "90%",
                                     height: "3px",
                                     
                                 },
@@ -441,7 +453,9 @@ export default function PodPost() {
 
                 {/* right side of the bar */}
                 <div className={classes.podInfo}>
-                    <Typography variant="body1" className={classes.title}> {audios[audioIndex].title} Title ● Playlist </Typography>
+                    <Tooltip title={audios[audioIndex].title + " - " + audios[audioIndex].playlist} placement="top-end">
+                        <Typography variant="body1" className={classes.title}> {audios[audioIndex].title + " - " + audios[audioIndex].playlist.replace(/^(.{11}[^\s]*).*/, "$1") + "..."} </Typography>
+                    </Tooltip>
                     <Typography variant="body4" className={classes.userResponse}> {audios[audioIndex].author}'s response </Typography>
                 </div>
                 

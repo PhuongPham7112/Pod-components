@@ -3,12 +3,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { GoogleLogin } from 'react-google-login';
-import Avatar from "@material-ui/core/Avatar";
-import DatePicker from 'react-date-picker';
-import { withStyles } from '@material-ui/core/styles';
-import './DatePickerCustom.css';
-import GoogleLogo from '../static/32px-Google_Logo.svg';
-import Popover from '@material-ui/core/Popover';
+import MUIPicker2 from './MUIPicker2.js'
+import { withStyles, useTheme } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+import GoogleSVG from './GoogleSVG.svg';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 const responseGoogle = (response) => {
@@ -22,13 +21,18 @@ const StyledButton = withStyles({
     },
 })(Button);
 
+const StyledGoogleButton = withStyles({
+    root: {
+      textTransform: 'none',
+    },
+})(Button)
+
+
 export default function Register() {
-    // for the calendar tracking
-    const [value, onChange] = useState(new Date());
+    const theme = useTheme();
+    const [wordCount, setWordCount] = useState(0)
     // use state for the position of the popover
-    const [isError, setError] = React.useState(null);
-    // use state for the position of the popover
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [isError, setError] = useState(null);
 
     // a function that tests email
     const validateEmailandPassword = ()  => {
@@ -47,61 +51,38 @@ export default function Register() {
         }
     };
 
-    // determine whether there will be a popover error message appear
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-        setError(false)
-    };
     // a callback function that combines both validation and popover functions
     const buttonOnClick = (event) => {
         validateEmailandPassword();
-        handleClick(event);
     };
 
+    const countCharacter = (event) => {
+        if ( event.target.value.length <= 50){
+            setWordCount(event.target.value.length)
+        }
+    }
+
     return(
-        <Box flexDirection="column" justifyContent="center" style={{padding:'5px'}}>
+        <Box flexDirection="column" justifyContent="center" alignItems="center" style={{display: 'flex', padding:'5px'}}>
             <TextField required id="email" label="email" variant="outlined" style={{width: '70%', margin: '10px', backgroundColor: 'white'}}/>
-            <TextField required id="username" label="username" variant="outlined" style={{width: '70%', margin: '10px', backgroundColor: 'white'}}/>
-            <TextField required id="password" label="password" variant="outlined" style={{width: '70%', margin: '10px', backgroundColor: 'white'}}/>
+            <TextField required id="username" label="username" variant="outlined" inputProps={{ maxLength: 50 }} onChange={countCharacter} style={{width: '70%', margin: '10px 10px 0px 10px', backgroundColor: 'white'}}/>
+            <FormHelperText style={{width: '70%', margin: '3px 10px 10px 10px'}}> {wordCount}/50 </FormHelperText>
+            <TextField required id="password" label="password" variant="outlined" style={{width: '70%', margin: '10px 10px 0px 10px', backgroundColor: 'white'}}/>
+            <FormHelperText style={{width: '70%', margin: '3px 10px 10px 10px'}}> Your password must have at least 6 characters with a number and a capital letter </FormHelperText>
             <TextField required id="confirm-password" label="confirm password" variant="outlined" style={{width: '70%', margin: '10px', backgroundColor: 'white'}}/>
-            <DatePicker
-                onChange={onChange}
-                showLeadingZeros={false}
-                value={value}
-                format="d/M/y"
-                dayPlaceholder="day"
-                monthPlaceholder="month"
-                yearPlaceholder="year"
-            />    
+            <MUIPicker2/>
+            <FormHelperText style={{width: '70%', margin: '0px 10px 10px 10px'}}> You must be 16 or above to use Pod </FormHelperText>
+            {isError && <FormHelperText style={{color: "red"}}> Invalid password or email </FormHelperText>}
             <StyledButton variant="contained" color="primary" onClick={buttonOnClick} style={{width: '70%', margin: '10px'}}>
                 Continue
             </StyledButton>
-            <Popover 
-                id='error-message'
-                elevation={0}
-                open={isError}
-                onClose={handleClose}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'left',
-                }}
-                >
-                Invalid email or password
-            </Popover>
+            <Divider style={{width: '50%', height: '1.5px', margin: '10px auto'}} />
             <GoogleLogin
                 clientId="62863344706-mnoijl0kao0bif165up4hhodd5br2ekh.apps.googleusercontent.com"
                 render={renderProps => (
-                <StyledButton variant="contained" color="primary" style={{width: '70%', margin: '10px'}} startIcon={<Avatar src={GoogleLogo}/>} onClick={renderProps.onClick} disabled={renderProps.disabled}> 
+                <StyledGoogleButton variant="outlined" color="primary" style={{width: '70%', margin: '10px'}} startIcon={<img src={GoogleSVG} style={{width: 25, height: 25}}/>} onClick={renderProps.onClick} disabled={renderProps.disabled}> 
                     Continue with Google
-                </StyledButton>
+                </StyledGoogleButton>
                 )}
                 buttonText="Login"
                 onSuccess={responseGoogle}
