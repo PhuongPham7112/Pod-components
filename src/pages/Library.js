@@ -12,7 +12,8 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import FaceIcon from '@material-ui/icons/Face';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Typography } from "@material-ui/core";
-import SimpleDialogMenu from './Dialog.js'
+import SimpleDialogMenu from './Dialog.js';
+import DeleteDialog from './DeleteDialog';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         padding: '10px',
         alignItems: 'center',
-        width: '20%',
+        width: '400px',
         height: '45%',
         margin: 'auto',
         border: 'solid #9E9E9E thin',
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Search() {
+export default function Library() {
     const classes = useStyles();
     const [pods, setPodList] = useState(['Game of the year', 'Fashion trends', 'Pastel or neon?!', 'ASMR is the new trend', 'Hot tea', 'Hanoi is brrrr'])
     const [users, setUserList] = useState(['Nino', 'Masha', 'Alice', 'Chaeyoung', 'Minnie', 'Lily', 'Soye', 'Beans'])
@@ -69,12 +70,12 @@ export default function Search() {
     return (
         <div>
         <div className={classes.container}>
-            <Typography className={classes.pods} variant="h3" color="primary">
+            <Typography className={classes.pods} variant="h6" color="primary">
                 Pods
             </Typography>
-            <List component="nav" aria-label="main mailbox folders" dense="true" alignItems="flex-start">
+            <List style={{width: '100%'}} component="nav" aria-label="main mailbox folders" dense="true" alignItems="flex-start">
                 {pods.map((pod) => (
-                    <ListItem>
+                <ListItem>
                     <ListItemIcon>
                         <PlayCircleOutlineIcon className={classes.playCircle} color="primary"/>
                     </ListItemIcon>
@@ -86,17 +87,17 @@ export default function Search() {
                     </ListItemSecondaryAction>
                 </ListItem>
                 ))}
-                <ListItemText className={classes.loadMore} disableTypography primary={<SimpleDialogMenu/>}/>
+                <ListItemText className={classes.loadMore} disableTypography primary={<SimpleDialogMenu title="Pods" message="load more"/>}/>
             </List>
         </div>
 
         <div style={{height: '10vh'}}/>
 
         <div className={classes.container}>
-            <Typography className={classes.pods} variant="h3" color="primary">
+            <Typography className={classes.pods} variant="h6" color="primary" >
                 Recently played Pods
             </Typography>
-            <List component="nav" aria-label="main mailbox folders" dense="true">
+            <List style={{width: '100%'}} component="nav" aria-label="main mailbox folders" dense="true" >
                 {pods.map((pod) => (
                     <ListItem>
                         <ListItemIcon>
@@ -105,17 +106,17 @@ export default function Search() {
                         <ListItemText primary={pod} secondary="Playlist"/>
                     </ListItem>
                 ))}
-                <ListItemText className={classes.loadMore} disableTypography primary={<SimpleDialogMenu/>}/>
+                <ListItemText className={classes.loadMore} disableTypography primary={<SimpleDialogMenu title="Recently played Pods" message="load more"/>}/>
             </List>
         </div>
 
         <div style={{height: '10vh'}}/>
 
         <div className={classes.container}>
-            <Typography className={classes.pods} variant="h3" color="primary">
+            <Typography className={classes.pods} variant="h6" color="primary">
                 Following Playlists
             </Typography>
-            <List component="nav" aria-label="main mailbox folders" dense="true">
+            <List style={{width: '100%'}} component="nav" aria-label="main mailbox folders" dense="true">
                 {pods.map((pod) => (
                     <ListItem>
                         <ListItemIcon>
@@ -129,17 +130,17 @@ export default function Search() {
                         </ListItemSecondaryAction>
                     </ListItem>
                 ))}
-                <ListItemText  className={classes.loadMore} disableTypography primary={<SimpleDialogMenu/>}/>
+                <ListItemText  className={classes.loadMore} disableTypography primary={<SimpleDialogMenu title="Following Playlists" message="load more"/>}/>
             </List>
         </div>
 
         <div style={{height: '10vh'}}/>
 
         <div className={classes.container}>
-            <Typography className={classes.pods} variant="h3" color="primary">
+            <Typography className={classes.pods} variant="h6" color="primary">
                 Following Users
             </Typography>
-            <List component="nav" aria-label="main mailbox folders" dense="true">
+            <List style={{width: '100%'}} component="nav" aria-label="main mailbox folders" dense="true">
                 {users.map((user) => (
                     <ListItem>
                         <ListItemIcon>
@@ -153,14 +154,14 @@ export default function Search() {
                         </ListItemSecondaryAction>
                     </ListItem>
                 ))}
-                <ListItemText  className={classes.loadMore} disableTypography primary={<SimpleDialogMenu/>}/>
+                <ListItemText  className={classes.loadMore} disableTypography primary={<SimpleDialogMenu title="Following Users" message="load more"/>}/>
             </List>
         </div>
 
         <div style={{height: '10vh'}}/>
 
         <div className={classes.chipContainer}>
-            <Typography className={classes.pods} variant="h3">
+            <Typography className={classes.pods} variant="h6">
                 Following tags
             </Typography>
             <div style={{margin: '15px'}}>

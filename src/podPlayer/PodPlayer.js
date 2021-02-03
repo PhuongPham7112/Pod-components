@@ -244,7 +244,7 @@ export default function PodPost() {
     const classes = useStyles();
     const theme = useTheme();
     const audioRef = useRef(null);
-    // audioIndex is used to track the order of the songs in the laylist
+    // audioIndex is used to track the order of the songs in the playlist
     const [audioIndex, setAudioIndex] = useState(0);
     // keep track of the current play time in the song
     const [currentTime, setCurrentTime] = useState(0);

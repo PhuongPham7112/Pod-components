@@ -2,7 +2,11 @@ import './App.css';
 import PodPost from './podPlayer/PodPlayer.js';
 import Account from './account/Account.js';
 import Notification from './pages/Notification.js';
+import { Typography } from "@material-ui/core";
 import Library from './pages/Library.js';
+import Search from './pages/Search.js';
+import Category from './category/Category.js';
+import Tag from  './tag/Tag.js'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 let mainTheme = createMuiTheme({
@@ -38,14 +42,13 @@ function App() {
   return (
     <ThemeProvider theme={mainTheme}>
     <div className="App">
+      {/* <Category/> */}
+      <Tag/>
       <body>
-        <Account/>
-        <div style={{height: '10vh'}}/>
-        <Notification/>
-        <div style={{height: '10vh'}}/>
         <Library/>
         <div style={{height: '10vh'}}/>
-        <PodPost/>
+        <Search/>
+        {/* <PodPost/> */}
       </body>
     </div>
     </ThemeProvider>
